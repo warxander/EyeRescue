@@ -27,6 +27,8 @@ private slots:
 
     void changeRemindBeforeMaxValue(int);
 
+    void resetTimers();
+
 private:
     void closeEvent(QCloseEvent* event) override;
 
@@ -37,7 +39,7 @@ private:
 
     int lockScreen() const;
 
-    void resetTimers();
+    void setActiveStatusIcon(bool);
 
     Ui::MainWindow *ui;
     QSystemTrayIcon* systemTray;

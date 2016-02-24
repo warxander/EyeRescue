@@ -9,6 +9,8 @@
 #include <QSystemTrayIcon>
 #include <QTimer>
 
+#include <QDebug>
+
 static QString const LOCK_TIME_SETTING = "lock_time";
 static QString const REMIND_TIME_SETTING = "remind_time";
 static quint8 const LOCK_TIME_DEFAULT = 20;
@@ -17,8 +19,8 @@ static quint16 const MILLISECONDS_PER_MIN = 60000;
 
 MainWindow::MainWindow(QWidget* parent) :
     QMainWindow{parent},
-    ui{new Ui::MainWindow}, systemTray{new QSystemTrayIcon{this}}, activateTimer{new QTimer{this}}, remindTimer{new QTimer{this}},
-    activateTime{0}, remindTime{0}
+    ui{new Ui::MainWindow}, systemTray{new QSystemTrayIcon{this}}, activateTimer{new QTimer{this}},
+    remindTimer{new QTimer{this}}, activateTime{0}, remindTime{0}
 {
     ui->setupUi(this);
 
@@ -36,8 +38,6 @@ MainWindow::MainWindow(QWidget* parent) :
 
 MainWindow::~MainWindow()
 {
-    writeSettings();
-
     delete ui;
 }
 
@@ -46,41 +46,45 @@ void MainWindow::activate()
     activateTimer->stop();
     remindTimer->stop();
 
+    setActiveStatusIcon(false);
+
     if (lockScreen() == QProcess::NormalExit)
-        if (QMessageBox::question(this, qApp->applicationName(), "Ready to continue?", QMessageBox::Yes | QMessageBox::No) == QMessageBox::Yes)
+    {
+        if (QMessageBox::question(this, qApp->applicationName(), "Ready to continue?") == QMessageBox::Yes)
             resetTimers();
-        else
-            activate();
+    }
     else
     {
-        QMessageBox::critical(this, qApp->applicationName(), "Cannot lock your screen! Please contact developer.", QMessageBox::Ok);
+        QMessageBox::critical(this, qApp->applicationName(),
+                              "Cannot lock your screen! Please <a href = 'mailto:dikanchukov@mail.ru'>contact</a> developer.",
+                              QMessageBox::Ok);
         qApp->quit();
     }
 }
 
 void MainWindow::remind()
 {
-    systemTray->showMessage("EyeRescue reminds you...", QString::number(remindTime) + " min. left before locking the screen, get ready!");
+    systemTray->showMessage("EyeRescue reminds you", QString::number(remindTime) + " min. left before locking the screen");
 }
 
 void MainWindow::buttonBoxClicked(QAbstractButton* button)
 {
     switch(ui->buttonBox->standardButton(button))
     {
-        case QDialogButtonBox::RestoreDefaults:
-        {
-            readSettings();
-            break;
-        }
-        case QDialogButtonBox::Apply:
-        {
-            writeSettings();
-            close();
-            resetTimers();
-            break;
-        }
-        default:
-            break;
+    case QDialogButtonBox::RestoreDefaults:
+    {
+        readSettings();
+        break;
+    }
+    case QDialogButtonBox::Apply:
+    {
+        writeSettings();
+        hide();
+        resetTimers();
+        break;
+    }
+    default:
+        break;
     }
 }
 
@@ -119,23 +123,64 @@ void MainWindow::writeSettings()
 
 void MainWindow::initSystemTrayIcon()
 {
+    if (!QSystemTrayIcon::isSystemTrayAvailable() || !QSystemTrayIcon::supportsMessages())
+    {
+        QMessageBox::critical(this, qApp->applicationName(),
+                              "Your system tray is not supported. Please <a href = 'mailto:dikanchukov@mail.ru'>contact</a> developer.",
+                              QMessageBox::Ok);
+        qApp->quit();
+    }
+
+
     QMenu* trayMenu {new QMenu{this}};
+    trayMenu->addAction("&Reset", this, SLOT(resetTimers()));
     trayMenu->addAction("&Settings...", this, SLOT(show()));
     trayMenu->addSeparator();
     trayMenu->addAction("E&xit", qApp, SLOT(quit()));
 
+    setActiveStatusIcon(false);
+
     systemTray->setContextMenu(trayMenu);
-    systemTray->setIcon(QIcon{":/icons/logo"});
     systemTray->show();
 }
 
 int MainWindow::lockScreen() const
 {
-    return QProcess::execute("gnome-screensaver-command --lock");
+    QStringList const lockScreenCommands
+    {
+        "gnome-screensaver-command --lock",
+        "xscreensaver-command --lock",
+        "qdbus org.freedesktop.ScreenSaver /ScreenSaver Lock",
+        "qdbus org.gnome.ScreenSaver /ScreenSaver Lock",
+        "xlock"
+    };
+
+    foreach (QString const & command, lockScreenCommands)
+        if (QProcess::execute(command) == QProcess::NormalExit)
+            return QProcess::NormalExit;
+
+    return QProcess::CrashExit;
+}
+
+void MainWindow::setActiveStatusIcon(bool active)
+{
+    if (active)
+    {
+        setWindowIcon(QIcon{":/icons/logo"});
+        systemTray->setIcon(QIcon{":/icons/logo"});
+    }
+    else
+    {
+        setWindowIcon(QIcon{":/icons/logo_inactive"});
+        systemTray->setIcon(QIcon{":/icons/logo_inactive"});
+    }
 }
 
 void MainWindow::resetTimers()
 {
     activateTimer->start(activateTime * MILLISECONDS_PER_MIN);
     remindTimer->start((activateTime - remindTime) * MILLISECONDS_PER_MIN);
+
+    setActiveStatusIcon(true);
+    remind();
 }

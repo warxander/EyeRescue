@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>255</width>
-    <height>145</height>
+    <width>264</width>
+    <height>193</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -15,7 +15,7 @@
   </property>
   <property name="windowIcon">
    <iconset resource="resources.qrc">
-    <normaloff>:/icons/logo</normaloff>:/icons/logo</iconset>
+    <normaloff>:/icons/logo_inactive</normaloff>:/icons/logo_inactive</iconset>
   </property>
   <widget class="QWidget" name="centralWidget">
    <layout class="QVBoxLayout" name="verticalLayout_5">
@@ -67,7 +67,7 @@
             <item>
              <widget class="QSpinBox" name="lockScreenSpinBox">
               <property name="minimum">
-               <number>1</number>
+               <number>2</number>
               </property>
               <property name="maximum">
                <number>30</number>
@@ -192,6 +192,23 @@
        </size>
       </property>
      </spacer>
+    </item>
+    <item>
+     <widget class="Line" name="line">
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QLabel" name="label_6">
+      <property name="text">
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Created by &lt;a href=&quot;https://vk.com/adikanchukov&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#296fbe;&quot;&gt;human&lt;/span&gt;&lt;/a&gt; for &lt;a href=&quot;https://github.com/adikanchukov/EyeRescue&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#296fbe;&quot;&gt;people&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;a href=&quot;https://github.com/adikanchukov/EyeRescue&quot;&gt;&lt;/a&gt;&lt;span style=&quot; color:#7f7f7f;&quot;&gt;Version 1.0&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+     </widget>
     </item>
    </layout>
   </widget>

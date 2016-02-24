@@ -10,6 +10,8 @@ int main(int argc, char *argv[])
     QApplication::setOrganizationDomain("eyerescue.com");
     QApplication::setApplicationName("EyeRescue");
 
+    app.setQuitOnLastWindowClosed(false);
+
     MainWindow window;
     window.show();
 
