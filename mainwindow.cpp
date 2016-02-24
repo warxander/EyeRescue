@@ -133,7 +133,7 @@ void MainWindow::initSystemTrayIcon()
 
 
     QMenu* trayMenu {new QMenu{this}};
-    trayMenu->addAction("&Reset", this, SLOT(resetTimers()));
+    trayMenu->addAction("Start/&Reset", this, SLOT(resetTimers()));
     trayMenu->addAction("&Settings...", this, SLOT(show()));
     trayMenu->addSeparator();
     trayMenu->addAction("E&xit", qApp, SLOT(quit()));
