@@ -101,7 +101,7 @@ void MainWindow::closeEvent(QCloseEvent* event)
 
 void MainWindow::readSettings()
 {
-    QSettings settings;
+    QSettings const settings;
 
     activateTime = settings.value(LOCK_TIME_SETTING, LOCK_TIME_DEFAULT).toUInt();
     remindTime = settings.value(REMIND_TIME_SETTING, REMIND_TIME_DEFAULT).toUInt();
@@ -132,9 +132,9 @@ void MainWindow::initSystemTrayIcon()
     }
 
 
-    QMenu* trayMenu {new QMenu{this}};
+    QMenu* const trayMenu {new QMenu{this}};
     trayMenu->addAction("Start/&Reset", this, SLOT(resetTimers()));
-    trayMenu->addAction("&Settings...", this, SLOT(show()));
+    trayMenu->addAction("&Settings", this, SLOT(show()));
     trayMenu->addSeparator();
     trayMenu->addAction("E&xit", qApp, SLOT(quit()));
 
