@@ -7,16 +7,44 @@ namespace Ui {
 class MainWindow;
 }
 
+class QAbstractButton;
+class QSystemTrayIcon;
+class QTimer;
+
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
 
 public:
-    explicit MainWindow(QWidget *parent = 0);
+    explicit MainWindow(QWidget* parent = 0);
     ~MainWindow();
 
+private slots:
+    void activate();
+    void remind();
+
+    void buttonBoxClicked(QAbstractButton*);
+
+    void changeRemindBeforeMaxValue(int);
+
 private:
+    void closeEvent(QCloseEvent* event) override;
+
+    void readSettings();
+    void writeSettings();
+
+    void initSystemTrayIcon();
+
+    int lockScreen() const;
+
+    void resetTimers();
+
     Ui::MainWindow *ui;
+    QSystemTrayIcon* systemTray;
+    QTimer* activateTimer;
+    QTimer* remindTimer;
+    quint8 activateTime;
+    quint8 remindTime;
 };
 
 #endif // MAINWINDOW_H

@@ -1,11 +1,17 @@
 #include "mainwindow.h"
+
 #include <QApplication>
 
 int main(int argc, char *argv[])
 {
-    QApplication a(argc, argv);
-    MainWindow w;
-    w.show();
+    QApplication app(argc, argv);
 
-    return a.exec();
+    QApplication::setOrganizationName("EyeRescue");
+    QApplication::setOrganizationDomain("eyerescue.com");
+    QApplication::setApplicationName("EyeRescue");
+
+    MainWindow window;
+    window.show();
+
+    return app.exec();
 }
