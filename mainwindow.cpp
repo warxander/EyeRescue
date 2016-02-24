@@ -125,7 +125,7 @@ void MainWindow::initSystemTrayIcon()
     trayMenu->addAction("E&xit", qApp, SLOT(quit()));
 
     systemTray->setContextMenu(trayMenu);
-    systemTray->setIcon(QIcon{"logo"});
+    systemTray->setIcon(QIcon{":/icons/logo"});
     systemTray->show();
 }
 
