@@ -182,5 +182,4 @@ void MainWindow::resetTimers()
     remindTimer->start((activateTime - remindTime) * MILLISECONDS_PER_MIN);
 
     setActiveStatusIcon(true);
-    remind();
 }
