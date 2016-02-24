@@ -23,8 +23,8 @@ It was created as a personal project for home and work.
 * Compiler with C++ 11 support
 
 
-###Installation tips:
-* Build in RELEASE
+###Installation tips
+* Build in *RELEASE*
 
 * Copy executable into */usr/local/bin*
 
