@@ -53,7 +53,8 @@ void MainWindow::activate()
     else
     {
         QMessageBox::critical(this, qApp->applicationName(),
-                              "Cannot lock your screen! Please <a href = 'mailto:dikanchukov@mail.ru'>contact</a> developer.",
+                              "Your lock screen is not available."
+                              "\nPlease <a href = 'mailto:dikanchukov@mail.ru'>contact</a> developer.",
                               QMessageBox::Ok);
         qApp->quit();
     }
@@ -61,7 +62,7 @@ void MainWindow::activate()
 
 void MainWindow::remind()
 {
-    systemTray->showMessage("EyeRescue reminds you", QString::number(remindTime) + " min. left before locking the screen");
+    systemTray->showMessage(qApp->applicationName(), QString::number(remindTime) + " min. left");
 }
 
 void MainWindow::buttonBoxClicked(QAbstractButton* button)
@@ -92,7 +93,6 @@ void MainWindow::systemTrayActivated(QSystemTrayIcon::ActivationReason reason)
         case QSystemTrayIcon::Trigger:
         {
             show();
-            setFocus();
             return;
         }
         default:
@@ -138,7 +138,8 @@ void MainWindow::initSystemTrayIcon()
     if (!QSystemTrayIcon::isSystemTrayAvailable() || !QSystemTrayIcon::supportsMessages())
     {
         QMessageBox::critical(this, qApp->applicationName(),
-                              "Your system tray is not supported. Please <a href = 'mailto:dikanchukov@mail.ru'>contact</a> developer.",
+                              "Your system tray is not supported."
+                              "\nPlease <a href = 'mailto:dikanchukov@mail.ru'>contact</a> developer.",
                               QMessageBox::Ok);
         qApp->quit();
     }
