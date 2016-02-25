@@ -10,9 +10,9 @@ It was created as a personal project for home and work.
 ###Features
 * Simple and easy-to-use
 
-* Locks your screen after time interval
+* Auto screen lock
 
-* Reminds you by using notifications
+* Notification reminder
 
 
 ###Build Requirements
@@ -24,7 +24,7 @@ It was created as a personal project for home and work.
 
 
 ###Installation tips
-* Build in *RELEASE*
+* Build in RELEASE
 
 * Copy executable into */usr/local/bin*
 
@@ -32,9 +32,9 @@ It was created as a personal project for home and work.
 
 
 ###Screenshots
-![alt tag](http://i.imgur.com/6AT684q.png?1)
+![alt tag](http://i.imgur.com/cQAkPmd.png)
 
-![alt tag](http://i.imgur.com/96YC1VG.png?1)
+![alt tag](http://i.imgur.com/xlwXOwc.png)
 
 
 ###Feedback
