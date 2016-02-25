@@ -92,6 +92,7 @@ void MainWindow::systemTrayActivated(QSystemTrayIcon::ActivationReason reason)
         case QSystemTrayIcon::Trigger:
         {
             show();
+            setFocus();
             return;
         }
         default:
