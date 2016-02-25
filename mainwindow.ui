@@ -13,10 +13,6 @@
   <property name="windowTitle">
    <string>EyeRescue</string>
   </property>
-  <property name="windowIcon">
-   <iconset resource="resources.qrc">
-    <normaloff>:/icons/logo_inactive</normaloff>:/icons/logo_inactive</iconset>
-  </property>
   <widget class="QWidget" name="centralWidget">
    <layout class="QVBoxLayout" name="verticalLayout_5">
     <item>
@@ -203,7 +199,7 @@
     <item>
      <widget class="QLabel" name="label_6">
       <property name="text">
-       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Created by &lt;a href=&quot;https://vk.com/adikanchukov&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#296fbe;&quot;&gt;human&lt;/span&gt;&lt;/a&gt; for &lt;a href=&quot;https://github.com/adikanchukov/EyeRescue&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#296fbe;&quot;&gt;people&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;a href=&quot;https://github.com/adikanchukov/EyeRescue&quot;&gt;&lt;/a&gt;&lt;span style=&quot; color:#7f7f7f;&quot;&gt;Version 1.0&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Created by &lt;a href=&quot;https://vk.com/adikanchukov&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#296fbe;&quot;&gt;human&lt;/span&gt;&lt;/a&gt; for &lt;a href=&quot;https://github.com/adikanchukov/EyeRescue&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#296fbe;&quot;&gt;people&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;a href=&quot;https://github.com/adikanchukov/EyeRescue&quot;&gt;&lt;/a&gt;&lt;span style=&quot; color:#7f7f7f;&quot;&gt;Version 1.1&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
       </property>
       <property name="alignment">
        <set>Qt::AlignCenter</set>
@@ -217,8 +213,6 @@
   </widget>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
- <resources>
-  <include location="resources.qrc"/>
- </resources>
+ <resources/>
  <connections/>
 </ui>

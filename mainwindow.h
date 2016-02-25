@@ -2,6 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QSystemTrayIcon>
 
 namespace Ui {
 class MainWindow;
@@ -24,10 +25,12 @@ private slots:
     void remind();
 
     void buttonBoxClicked(QAbstractButton*);
+    void systemTrayActivated(QSystemTrayIcon::ActivationReason);
 
     void changeRemindBeforeMaxValue(int);
 
     void resetTimers();
+    void stopTimers();
 
 private:
     void closeEvent(QCloseEvent* event) override;

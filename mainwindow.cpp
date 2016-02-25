@@ -1,15 +1,13 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
+#include <QDesktopWidget>
 #include <QCloseEvent>
 #include <QMenu>
 #include <QMessageBox>
 #include <QProcess>
 #include <QSettings>
-#include <QSystemTrayIcon>
 #include <QTimer>
-
-#include <QDebug>
 
 static QString const LOCK_TIME_SETTING = "lock_time";
 static QString const REMIND_TIME_SETTING = "remind_time";
@@ -23,6 +21,8 @@ MainWindow::MainWindow(QWidget* parent) :
     remindTimer{new QTimer{this}}, activateTime{0}, remindTime{0}
 {
     ui->setupUi(this);
+
+    setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter, size(), qApp->desktop()->availableGeometry()));
 
     readSettings();
 
@@ -43,10 +43,7 @@ MainWindow::~MainWindow()
 
 void MainWindow::activate()
 {
-    activateTimer->stop();
-    remindTimer->stop();
-
-    setActiveStatusIcon(false);
+    stopTimers();
 
     if (lockScreen() == QProcess::NormalExit)
     {
@@ -85,6 +82,20 @@ void MainWindow::buttonBoxClicked(QAbstractButton* button)
     }
     default:
         break;
+    }
+}
+
+void MainWindow::systemTrayActivated(QSystemTrayIcon::ActivationReason reason)
+{
+    switch(reason)
+    {
+        case QSystemTrayIcon::Trigger:
+        {
+            show();
+            return;
+        }
+        default:
+            break;
     }
 }
 
@@ -133,12 +144,16 @@ void MainWindow::initSystemTrayIcon()
 
 
     QMenu* const trayMenu {new QMenu{this}};
-    trayMenu->addAction("Start/&Reset", this, SLOT(resetTimers()));
+    trayMenu->addAction("&Reset", this, SLOT(resetTimers()));
+    trayMenu->addAction("Sto&p", this, SLOT(stopTimers()));
     trayMenu->addAction("&Settings", this, SLOT(show()));
     trayMenu->addSeparator();
     trayMenu->addAction("E&xit", qApp, SLOT(quit()));
 
     setActiveStatusIcon(false);
+
+    connect(systemTray, SIGNAL(activated(QSystemTrayIcon::ActivationReason)),
+            SLOT(systemTrayActivated(QSystemTrayIcon::ActivationReason)));
 
     systemTray->setContextMenu(trayMenu);
     systemTray->show();
@@ -182,4 +197,12 @@ void MainWindow::resetTimers()
     remindTimer->start((activateTime - remindTime) * MILLISECONDS_PER_MIN);
 
     setActiveStatusIcon(true);
+}
+
+void MainWindow::stopTimers()
+{
+    activateTimer->stop();
+    remindTimer->stop();
+
+    setActiveStatusIcon(false);
 }
