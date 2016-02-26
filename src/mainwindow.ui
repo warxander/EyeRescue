@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>329</width>
+    <width>342</width>
     <height>209</height>
    </rect>
   </property>
@@ -128,7 +128,7 @@
             <item>
              <widget class="QCheckBox" name="busyModeCheckBox">
               <property name="enabled">
-               <bool>false</bool>
+               <bool>true</bool>
               </property>
               <property name="toolTip">
                <string>Disable Lock Screen</string>
@@ -141,7 +141,7 @@
             <item>
              <widget class="QCheckBox" name="playSoundCheckBox">
               <property name="enabled">
-               <bool>false</bool>
+               <bool>true</bool>
               </property>
               <property name="text">
                <string>Play sound</string>
@@ -234,7 +234,7 @@
     <item>
      <widget class="QLabel" name="label_6">
       <property name="text">
-       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Created by &lt;a href=&quot;https://vk.com/adikanchukov&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#296fbe;&quot;&gt;human&lt;/span&gt;&lt;/a&gt; for &lt;a href=&quot;https://github.com/adikanchukov/EyeRescue&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#296fbe;&quot;&gt;people&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; color:#7f7f7f;&quot;&gt;Version 2.0&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;Created by &lt;a href=&quot;https://vk.com/adikanchukov&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#296fbe;&quot;&gt;human&lt;/span&gt;&lt;/a&gt; for &lt;a href=&quot;https://github.com/adikanchukov/EyeRescue&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#296fbe;&quot;&gt;people&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; color:#7f7f7f;&quot;&gt;Version 2.0&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
       </property>
       <property name="alignment">
        <set>Qt::AlignCenter</set>

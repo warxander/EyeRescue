@@ -9,8 +9,10 @@ class MainWindow;
 }
 
 class QAbstractButton;
+class QMediaPlayer;
 class QSystemTrayIcon;
 class QTimer;
+class Settings;
 
 class MainWindow : public QMainWindow
 {
@@ -21,7 +23,7 @@ public:
     ~MainWindow();
 
 private slots:
-    void activate();
+    void lock();
     void remind();
     void notify(QString const & message);
 
@@ -47,10 +49,10 @@ private:
 
     Ui::MainWindow *ui;
     QSystemTrayIcon* systemTray;
-    QTimer* activateTimer;
+    QTimer* lockTimer;
     QTimer* remindTimer;
-    quint8 activateTime;
-    quint8 remindTime;
+    QScopedPointer<Settings> settings;
+    QMediaPlayer* player;
 };
 
 #endif // MAINWINDOW_H
