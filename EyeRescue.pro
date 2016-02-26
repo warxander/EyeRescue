@@ -8,21 +8,21 @@ QT       += core gui widgets
 
 CONFIG += c++11
 
-greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
-
 TARGET = EyeRescue
 TEMPLATE = app
 
 
 SOURCES += main.cpp\
-        mainwindow.cpp
+        src/mainwindow.cpp
 
-HEADERS  += mainwindow.h
+HEADERS  += inc/mainwindow.h
 
-FORMS    += mainwindow.ui
+FORMS    += src/mainwindow.ui
 
 RESOURCES += \
-    resources.qrc
+    etc/resources.qrc
 
 DISTFILES += \
     README.md
+
+INCLUDEPATH += inc/

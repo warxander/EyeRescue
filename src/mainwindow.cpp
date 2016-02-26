@@ -62,7 +62,12 @@ void MainWindow::activate()
 
 void MainWindow::remind()
 {
-    systemTray->showMessage(qApp->applicationName(), QString::number(remindTime) + " min. left");
+    notify(QString::number(remindTime) + " min. left");
+}
+
+void MainWindow::notify(const QString & message)
+{
+    systemTray->showMessage(qApp->applicationName(), message);
 }
 
 void MainWindow::buttonBoxClicked(QAbstractButton* button)
@@ -146,8 +151,8 @@ void MainWindow::initSystemTrayIcon()
 
 
     QMenu* const trayMenu {new QMenu{this}};
-    trayMenu->addAction("&Reset", this, SLOT(resetTimers()));
     trayMenu->addAction("Sto&p", this, SLOT(stopTimers()));
+    trayMenu->addAction("&Reset", this, SLOT(resetTimers()));
     trayMenu->addAction("&Settings", this, SLOT(show()));
     trayMenu->addSeparator();
     trayMenu->addAction("E&xit", qApp, SLOT(quit()));

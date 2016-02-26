@@ -23,6 +23,7 @@ public:
 private slots:
     void activate();
     void remind();
+    void notify(QString const & message);
 
     void buttonBoxClicked(QAbstractButton*);
     void systemTrayActivated(QSystemTrayIcon::ActivationReason);
