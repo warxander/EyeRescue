@@ -8,9 +8,6 @@ class Settings
 public:
     explicit Settings();
 
-    bool busyMode() const;
-    void setBusyMode(bool busyMode);
-
     bool playSound() const;
     void setPlaySound(bool playSound);
 
@@ -24,7 +21,6 @@ private:
     quint8 lockTime_;
     quint8 remindTime_;
     bool playSound_;
-    bool busyMode_;
 };
 
 #endif // SETTINGS_H

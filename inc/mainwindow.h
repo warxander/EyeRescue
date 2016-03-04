@@ -9,7 +9,9 @@ class MainWindow;
 }
 
 class QAbstractButton;
+class QAction;
 class QMediaPlayer;
+class QMessageBox;
 class QSystemTrayIcon;
 class QTimer;
 class Settings;
@@ -42,6 +44,8 @@ private:
     void writeSettings();
 
     void initSystemTrayIcon();
+    void initMediaPlayer();
+    void initMessageBox();
 
     int lockScreen() const;
 
@@ -49,10 +53,12 @@ private:
 
     Ui::MainWindow *ui;
     QSystemTrayIcon* systemTray;
+    QMediaPlayer* player;
+    QMessageBox* continueMessageBox;
+    QAction* busyModeAction;
     QTimer* lockTimer;
     QTimer* remindTimer;
     QScopedPointer<Settings> settings;
-    QMediaPlayer* player;
 };
 
 #endif // MAINWINDOW_H

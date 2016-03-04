@@ -5,6 +5,7 @@
 #include <QDesktopWidget>
 #include <QCloseEvent>
 #include <QMediaPlayer>
+#include <QMediaPlaylist>
 #include <QMenu>
 #include <QMessageBox>
 #include <QProcess>
@@ -20,9 +21,9 @@ static quint16 const MILLISECONDS_PER_MIN = 60000;
 static const int NOTIFY_VOLUME = 50;
 
 MainWindow::MainWindow(QWidget* parent) :
-    QMainWindow{parent},
-    ui{new Ui::MainWindow}, systemTray{new QSystemTrayIcon{this}}, lockTimer{new QTimer{this}},
-    remindTimer{new QTimer{this}}, settings(new Settings()), player{new QMediaPlayer{this}}
+    QMainWindow{parent}, ui{new Ui::MainWindow}, systemTray{new QSystemTrayIcon{this}}, player{new QMediaPlayer{this}},
+    continueMessageBox{new QMessageBox{this}}, busyModeAction{new QAction{"Busy mode", this}},
+    lockTimer{new QTimer{this}}, remindTimer{new QTimer{this}}, settings(new Settings())
 {
     ui->setupUi(this);
 
@@ -37,10 +38,10 @@ MainWindow::MainWindow(QWidget* parent) :
     connect(remindTimer, SIGNAL(timeout()), SLOT(remind()));
 
     setWindowFlags(Qt::CustomizeWindowHint | Qt::WindowTitleHint | Qt::WindowCloseButtonHint);
-    initSystemTrayIcon();
 
-    player->setMedia(QUrl("qrc:/sounds/notify"));
-    player->setVolume(NOTIFY_VOLUME);
+    initSystemTrayIcon();
+    initMediaPlayer();
+    initMessageBox();
 }
 
 MainWindow::~MainWindow()
@@ -52,18 +53,18 @@ void MainWindow::lock()
 {
     stopTimers();
 
-    if (settings->busyMode())
+    if (busyModeAction->isChecked())
     {
-        notify("Time to rest!");
+        notify("Get some rest");
 
-        if (QMessageBox::question(this, qApp->applicationName(), "Ready to continue?") == QMessageBox::Yes)
+        if (continueMessageBox->exec() == QMessageBox::Yes)
             resetTimers();
     }
     else
     {
         if (lockScreen() == QProcess::NormalExit)
         {
-            if (QMessageBox::question(this, qApp->applicationName(), "Ready to continue?") == QMessageBox::Yes)
+            if (continueMessageBox->exec() == QMessageBox::Yes)
                 resetTimers();
         }
         else
@@ -88,14 +89,15 @@ void MainWindow::notify(const QString & message)
     if (settings->playSound())
         player->play();
 
-    systemTray->showMessage(qApp->applicationName(), "<p align=\"center\">" + message + "</p>");
+    systemTray->showMessage(qApp->applicationName(), message);
+
 }
 
 void MainWindow::buttonBoxClicked(QAbstractButton* button)
 {
     switch(ui->buttonBox->standardButton(button))
     {
-    case QDialogButtonBox::RestoreDefaults:
+    case QDialogButtonBox::Reset:
     {
         readSettings();
         break;
@@ -144,12 +146,10 @@ void MainWindow::readSettings()
     settings->setLockTime(qSettings.value(LOCK_TIME_SETTING, settings->lockTime()).toUInt());
     settings->setRemindTime(qSettings.value(REMIND_TIME_SETTING, settings->remindTime()).toUInt());
     settings->setPlaySound(qSettings.value(PLAY_SOUND_SETTING, settings->playSound()).toBool());
-    settings->setBusyMode(qSettings.value(BUSY_MODE_SETTING, settings->busyMode()).toBool());
 
     ui->lockScreenSpinBox->setValue(settings->lockTime());
     ui->remindSpinBox->setValue(settings->remindTime());
     ui->playSoundCheckBox->setChecked(settings->playSound());
-    ui->busyModeCheckBox->setChecked(settings->busyMode());
 }
 
 void MainWindow::writeSettings()
@@ -159,12 +159,10 @@ void MainWindow::writeSettings()
     settings->setLockTime(ui->lockScreenSpinBox->value());
     settings->setRemindTime(ui->remindSpinBox->value());
     settings->setPlaySound(ui->playSoundCheckBox->isChecked());
-    settings->setBusyMode(ui->busyModeCheckBox->isChecked());
 
     qSettings.setValue(LOCK_TIME_SETTING, settings->lockTime());
     qSettings.setValue(REMIND_TIME_SETTING, settings->remindTime());
     qSettings.setValue(PLAY_SOUND_SETTING, settings->playSound());
-    qSettings.setValue(BUSY_MODE_SETTING, settings->busyMode());
 }
 
 void MainWindow::initSystemTrayIcon()
@@ -182,6 +180,11 @@ void MainWindow::initSystemTrayIcon()
     QMenu* const trayMenu {new QMenu{this}};
     trayMenu->addAction("Sto&p", this, SLOT(stopTimers()));
     trayMenu->addAction("&Reset", this, SLOT(resetTimers()));
+    trayMenu->addSeparator();
+
+    busyModeAction->setCheckable(true);
+    trayMenu->addAction(busyModeAction);
+
     trayMenu->addAction("&Settings", this, SLOT(show()));
     trayMenu->addSeparator();
     trayMenu->addAction("E&xit", qApp, SLOT(quit()));
@@ -193,6 +196,26 @@ void MainWindow::initSystemTrayIcon()
 
     systemTray->setContextMenu(trayMenu);
     systemTray->show();
+}
+
+void MainWindow::initMediaPlayer()
+{
+    QMediaPlaylist* playlist {new QMediaPlaylist{this}};
+    playlist->addMedia(QUrl("qrc:/sounds/notify"));
+
+    player->setPlaylist(playlist);
+    player->setVolume(NOTIFY_VOLUME);
+}
+
+void MainWindow::initMessageBox()
+{
+    continueMessageBox->setIcon(QMessageBox::Question);
+    continueMessageBox->setWindowModality(Qt::ApplicationModal);
+    continueMessageBox->setWindowTitle(qApp->applicationName());
+    continueMessageBox->setText("Ready to continue?");
+    continueMessageBox->setStandardButtons(QMessageBox::Yes | QMessageBox::No);
+    continueMessageBox->setDefaultButton(QMessageBox::Yes);
+    continueMessageBox->setEscapeButton(QMessageBox::No);
 }
 
 int MainWindow::lockScreen() const

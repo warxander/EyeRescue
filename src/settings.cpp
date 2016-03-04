@@ -3,21 +3,10 @@
 static quint8 const LOCK_TIME_DEFAULT = 20;
 static quint8 const REMIND_TIME_DEFAULT = 1;
 static bool const PLAY_SOUND_DEFAULT = true;
-static bool const BUSY_MODE_DEFAULT = false;
 
-Settings::Settings():lockTime_(20), remindTime_(REMIND_TIME_DEFAULT),
-    playSound_(PLAY_SOUND_DEFAULT), busyMode_(BUSY_MODE_DEFAULT)
+Settings::Settings(): lockTime_(20), remindTime_(REMIND_TIME_DEFAULT),
+    playSound_(PLAY_SOUND_DEFAULT)
 {
-}
-
-bool Settings::busyMode() const
-{
-    return busyMode_;
-}
-
-void Settings::setBusyMode(bool busyMode)
-{
-    busyMode_ = busyMode;
 }
 
 bool Settings::playSound() const
