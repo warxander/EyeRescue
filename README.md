@@ -12,7 +12,9 @@ It was created as a personal project for home and work.
 
 * Auto screen lock
 
-* Notification reminder
+* Notification and sound reminders
+
+* Busy mode
 
 
 ###Build Requirements
@@ -32,9 +34,9 @@ It was created as a personal project for home and work.
 
 
 ###Screenshots
-![alt tag](http://i.imgur.com/cQAkPmd.png)
+![alt tag](http://i.imgur.com/yF6Xhgy.png)
 
-![alt tag](http://i.imgur.com/xlwXOwc.png)
+![alt tag](http://i.imgur.com/IPS1pQs.png)
 
 
 ###Feedback
