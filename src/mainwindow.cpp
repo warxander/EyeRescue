@@ -71,7 +71,7 @@ void MainWindow::lock()
         {
             QMessageBox::critical(this, qApp->applicationName(),
                                   "Your lock screen is not available."
-                                  "\nPlease <a href = 'mailto:dikanchukov@mail.ru'>contact</a> developer.",
+                                  "<br>Please <a href = 'mailto:dikanchukov@mail.ru'>contact</a> developer.",
                                   QMessageBox::Ok);
             qApp->quit();
         }
@@ -229,7 +229,18 @@ int MainWindow::lockScreen() const
         "xlock"
     };
 
-    foreach (QString const & command, lockScreenCommands)
+    QStringList const lockScreenCommandsForWin
+    {
+        "rundll32.exe user32.dll,LockWorkStation"
+    };
+
+#ifdef Q_OS_WIN
+    QStringList const &commands = lockScreenCommandsForWin;
+#else
+    QStringList const &commands = lockScreenCommands;
+#endif
+
+    foreach (QString const & command, commands)
         if (QProcess::execute(command) == QProcess::NormalExit)
             return QProcess::NormalExit;
 
