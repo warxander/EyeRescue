@@ -229,7 +229,18 @@ int MainWindow::lockScreen() const
         "xlock"
     };
 
-    foreach (QString const & command, lockScreenCommands)
+    QStringList const lockScreenCommandsForWin
+    {
+        "rundll32.exe user32.dll,LockWorkStation"
+    };
+
+#ifdef Q_OS_WIN
+    QStringList const &commands = lockScreenCommandsForWin;
+#else
+    QStringList const &commands = lockScreenCommands;
+#endif
+
+    foreach (QString const & command, commands)
         if (QProcess::execute(command) == QProcess::NormalExit)
             return QProcess::NormalExit;
 
