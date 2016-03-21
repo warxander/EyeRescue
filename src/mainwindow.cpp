@@ -71,7 +71,7 @@ void MainWindow::lock()
         {
             QMessageBox::critical(this, qApp->applicationName(),
                                   "Your lock screen is not available."
-                                  "\nPlease <a href = 'mailto:dikanchukov@mail.ru'>contact</a> developer.",
+                                  "<br>Please <a href = 'mailto:dikanchukov@mail.ru'>contact</a> developer.",
                                   QMessageBox::Ok);
             qApp->quit();
         }
