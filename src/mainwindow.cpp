@@ -183,6 +183,7 @@ void MainWindow::initSystemTrayIcon()
     trayMenu->addSeparator();
 
     busyModeAction->setCheckable(true);
+    busyModeAction->setChecked(true);
     trayMenu->addAction(busyModeAction);
 
     trayMenu->addAction("&Settings", this, SLOT(show()));
