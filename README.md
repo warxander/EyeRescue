@@ -18,7 +18,7 @@ It was created as a personal project for home and work.
 
 
 ###Build Requirements
-* Linux
+* Windows/Linux
 
 * Tested on Qt 5.5
 
