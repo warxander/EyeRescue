@@ -1,13 +1,13 @@
 ![alt tag](http://i.imgur.com/OhWH2K2.png?1)
 
 
-##EyeRescue
+## EyeRescue
 EyeRescue is a small utility which will help to control your PC time.
 
 It was created as a personal project for home and work.
 
 
-###Features
+### Features
 * Simple and easy-to-use
 
 * Auto screen lock
@@ -17,7 +17,7 @@ It was created as a personal project for home and work.
 * Busy mode
 
 
-###Build Requirements
+### Build Requirements
 * Windows/Linux
 
 * Tested on Qt 5.5
@@ -25,7 +25,7 @@ It was created as a personal project for home and work.
 * Compiler with C++ 11 support
 
 
-###Installation tips
+### Installation tips
 * Build in RELEASE
 
 * Copy executable into */usr/local/bin*
@@ -33,13 +33,13 @@ It was created as a personal project for home and work.
 * Add to startup applications list
 
 
-###Screenshots
+### Screenshots
 ![alt tag](http://i.imgur.com/yF6Xhgy.png)
 
 ![alt tag](http://i.imgur.com/IPS1pQs.png)
 
 
-###Feedback
+### Feedback
 * dikanchukov@mail.ru 
 
 * http://vk.com/adikanchukov
